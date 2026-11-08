@@ -1,0 +1,27 @@
+
+datatable(
+    TimeGenerated:datetime,
+    Computer:string,
+    Account:string,
+    Process:string,
+    CommandLine:string
+)
+[
+    datetime(2026-11-07T08:10:00Z),
+    "WKSTN07",
+    "j.mokoena",
+    "powershell.exe",
+    "powershell.exe -EncodedCommand example"
+];
+
+SecurityEvents
+| where Process =~ "powershell.exe"
+| where CommandLine contains "-enc"
+    or CommandLine contains "EncodedCommand"
+    or CommandLine contains "DownloadString"
+| project
+    TimeGenerated,
+    Computer,
+    Account,
+    Process,
+    CommandLine

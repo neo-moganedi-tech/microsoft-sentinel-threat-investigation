@@ -1,0 +1,24 @@
+
+datatable(
+    TimeGenerated: datetime,
+    Account: string,
+    EventID: int,
+    SourceIP: string
+)
+[
+    datetime(2026-11-07T08:00:00Z), "j.mokoena", 4625, "203.0.113.50",
+    datetime(2026-11-07T08:01:00Z), "j.mokoena", 4625, "203.0.113.50",
+    datetime(2026-11-07T08:02:00Z), "j.mokoena", 4625, "203.0.113.50",
+    datetime(2026-11-07T08:03:00Z), "j.mokoena", 4625, "203.0.113.50",
+    datetime(2026-11-07T08:05:00Z), "j.mokoena", 4624, "203.0.113.50",
+    datetime(2026-11-07T08:12:00Z), "svc_backup", 4625, "198.51.100.25",
+    datetime(2026-11-07T08:13:00Z), "svc_backup", 4625, "198.51.100.25"
+]
+| where EventID == 4625
+| summarize
+    FailedAttempts = count(),
+    FirstAttempt = min(TimeGenerated),
+    LastAttempt = max(TimeGenerated)
+    by Account, SourceIP
+| where FailedAttempts >= 3
+| order by FailedAttempts desc
