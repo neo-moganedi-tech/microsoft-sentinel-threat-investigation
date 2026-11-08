@@ -1,0 +1,23 @@
+
+let SecurityEvents = datatable(
+    TimeGenerated: datetime,
+    Computer: string,
+    Account: string,
+    EventID: int,
+    SourceIP: string,
+    Process: string,
+    CommandLine: string
+)
+[
+    datetime(2026-11-07T08:00:00Z), "DC01", "j.mokoena", 4625, "203.0.113.50", "Logon", "",
+    datetime(2026-11-07T08:01:00Z), "DC01", "j.mokoena", 4625, "203.0.113.50", "Logon", "",
+    datetime(2026-11-07T08:02:00Z), "DC01", "j.mokoena", 4625, "203.0.113.50", "Logon", "",
+    datetime(2026-11-07T08:03:00Z), "DC01", "j.mokoena", 4625, "203.0.113.50", "Logon", "",
+    datetime(2026-11-07T08:05:00Z), "DC01", "j.mokoena", 4624, "203.0.113.50", "Logon", "",
+    datetime(2026-11-07T08:10:00Z), "WKSTN07", "j.mokoena", 4688, "N/A", "powershell.exe", "powershell.exe -EncodedCommand example",
+    datetime(2026-11-07T08:12:00Z), "DC01", "svc_backup", 4625, "198.51.100.25", "Logon", "",
+    datetime(2026-11-07T08:13:00Z), "DC01", "svc_backup", 4625, "198.51.100.25", "Logon", ""
+];
+SecurityEvents
+| project TimeGenerated, Computer, Account, EventID, SourceIP
+| order by TimeGenerated asc
